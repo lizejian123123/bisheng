@@ -73,10 +73,3 @@ jobs:
           value=$(echo "${value}" | sed -e ':a' -e 'N' -e '$!ba' -e 's/\r/%0A/g')
           echo "message=${value}" >> $GITHUB_ENV
         shell: bash
-
-      - name: notify feishu
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.FEISHU_WEBHOOK }}
-          method: 'POST'
-          data: '{"msg_type":"post","content":{"post":{"zh_cn":{"title": "${{ steps.get_version.outputs.VERSION }}发布成功",  "content": [[{"tag":"text","text":"发布功能："},{"tag":"text","text":"${{ env.message }}"}]]}}}}'
